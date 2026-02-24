@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Shoe Store{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .row-discount {
+            background-color: #2E8B57 !important;
+            color: white;
+        }
+
+        .row-outofstock {
+            background-color: #87CEEB !important;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: red !important;
+        }
+
+        .price-new {
+            color: black !important;
+        }
+
+        .row-discount .price-old {
+            color: #ffcccc !important;
+        }
+
+        .row-discount .price-new {
+            color: white !important;
+        }
+
+        td {
+            background-color: unset !important;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand"><img src="/static/Icon.JPG" style="width: 50px;" alt=""> Shoe Store</span>
+            <div>
+                {% if user.is_authenticated %}
+                {{ user.get_full_name|default:user.username }} |
+                <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-secondary">Выйти</a>
+                {% else %}
+                Гость | <a href="{% url 'login' %}" class="btn btn-sm btn-outline-primary">Войти</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
