@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% if form %}
+  <div class="mb-3">
+    {{ form.status.label_tag }}
+    {{ form.status }}
+    {% if form.status.errors %}
+    <div class="invalid-feedback d-block">
+      {{ form.status.errors }}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <h4>Позиции заказа</h4>
+  {{ formset.management_form }}
+  {% for form in formset %}
+  <div class="formset-row mb-3 p-3 border rounded">
+    <div class="row">
+      <div class="col-md-4">
+        {{ form.product.label_tag }}
+        {{ form.product }}
+      </div>
+      <div class="col-md-3">
+        {{ form.quantity.label_tag }}
+        {{ form.quantity }}
+      </div>
+      <div class="col-md-3">
+        {{ form.price.label_tag }}
+        {{ form.price }}
+      </div>
+      <div class="col-md-2">
+        {{ form.DELETE }}
+      </div>
+    </div>
+    {% if form.non_field_errors %}
+    <div class="text-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-success">
+      <i class="bi bi-save"></i> Сохранить
+    </button>
+    <a href="{% url 'orders:order_list' %}" class="btn btn-secondary">
+      <i class="bi bi-arrow-left"></i> Отмена
+    </a>
+  </div>
+</form>
+
+<script>
+  // Add more form rows dynamically if needed
+  document.addEventListener('DOMContentLoaded', function () {
+    // Basic formset handling can be added
+  });
+</script>
+{% endblock %}
